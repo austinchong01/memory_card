@@ -1,0 +1,14 @@
+.card {
+    width: 250px;
+    height: 300px;
+    background-color: bisque;
+    color: black;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
