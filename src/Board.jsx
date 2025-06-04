@@ -13,19 +13,19 @@ function Card({ pokemon }) {
         }
         return response.json();
       })
-    .then((d) => {
-      setData(d.sprites.front_default);
-      setName(d.name);
-    })
+      .then((d) => {
+        setData(d.sprites.front_default);
+        setName(d.name);
+      })
 
       .catch((error) => console.log(error));
   }, []);
 
   return (
-  <div className="card">
-    <h2>{name}</h2>
-    {data && <img src={data} alt={name} />}
-  </div>
+    <div className="card">
+      <h2>{name}</h2>
+      {data && <img src={data} alt={name} />}
+    </div>
   );
 }
 
@@ -52,21 +52,34 @@ export default function Board() {
     "palkia",
     "dialga",
     "flygon",
-  ])
+  ]);
+  const [score, setScore] = useState(0);
+  const [clicked, setClicked] = useState([]);
+  const [best, setBest] = useState(0);
 
-  const handleClick = () => {
+  const handleClick = (val) => {
+    if(!clicked.includes(val)){
+      setClicked([...clicked, val]);
+      setScore(score + 1);
+    } else {
+      if(score > best) setBest(score);
+      setClicked([]);
+      setScore(0);
+    }
     setList(shuffle(list));
   };
 
-  return (
+  return (<>
+    <div>Best Score: {best}</div>
+    <div>Score: {score}</div>
     <div className="board">
       {list.map((pokemon) => {
         return (
-          <div onClick={handleClick} key={pokemon}>
+          <div onClick={() => handleClick(pokemon)} key={pokemon}>
             <Card pokemon={pokemon}/>
           </div>
         );
       })}
     </div>
-  );
+  </>);
 }
